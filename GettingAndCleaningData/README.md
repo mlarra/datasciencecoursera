@@ -89,10 +89,10 @@ In this step, the columns containing mean and standard deviations are filtered. 
 * freqBodyGyro-std()-Y
 * freqBodyGyro-std()-Z
 
-As can be observed, each colum describes many aspects (source,axis, etc.). Tidy the dataset, firts it is melt and new columns are created following the advices in http://vita.had.co.nz/papers/tidy-data-pres.pdf. The final dataset contains to value columns (mean and std) and other columns that describe the axis, the source of the measure, etc. (see **code book**). 
+As can be observed, each colum describes many aspects (source,axis, etc.). Tidy the dataset, firts it is melt and new columns are created following the advices in http://vita.had.co.nz/papers/tidy-data-pres.pdf. The final dataset contains to value columns (mean and std) and other columns that describe the axis, the source of the measure, etc. (see **code book**). This step generates the **data/tidy/fullTidyDS.csv**.
 
 Generating the summarized tidy dataset
 --------------------------------------
 
-The average of the mean and std are computed using *ddply*.
+The average of the mean and std are computed using *ddply*.This step generates the **data/tidy/finalTidyDS.csv**.
 
