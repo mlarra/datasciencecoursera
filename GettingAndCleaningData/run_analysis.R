@@ -35,3 +35,26 @@ if (!areFilesAvailable(raw.data.filenames)) {
 print("RAW DATA READY - Starting cleaning up process")
 print("Merging raw data")
 merged.raw.data <- mergeData(raw.data.folder)
+
+## Filter columns
+tidyDataFolder <- paste(data.folder,"tidy",sep="/")
+if (!file.exists(tidyDataFolder)) {
+  dir.create(tidyDataFolder)
+}
+
+
+
+## Generating full tidy dataset
+print("Creating full tidy dataset")
+full.tidy.dataset <- getTidyData(merged.raw.data)
+
+
+fullTidyDataFile <- paste(tidyDataFolder,"fullTidyDS.csv", sep="/")
+write.csv(full.tidy.dataset,fullTidyDataFile,row.names=F)
+
+## Generating final tidy dataset
+print("Creating summarized tidy dataset")
+
+finalTidyDataFile <- paste(tidyDataFolder,"finalTidyDS.csv", sep="/")
+final.tidy.dataset <- getSummarizedTidyData(full.tidy.dataset)
+write.csv(final.tidy.dataset,finalTidyDataFile, row.names=F)

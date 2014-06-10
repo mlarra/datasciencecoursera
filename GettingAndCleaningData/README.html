@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>README</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<h1>README</h1>
+
+<p>This document describes how the <strong>run_analysis.R</strong> script works. 
+In particular, it depicts the following
+tasks carried out by the script:</p>
+
+<ol>
+<li>Getting the data</li>
+<li>Merging the data</li>
+<li>Generating the tidy full dataset</li>
+<li>Generating the summarized tidy dataset</li>
+</ol>
+
+<h2>Getting the data</h2>
+
+<p>In this step, the scripts checks whether or not the raw data is already available in the <strong>data/rawdata</strong> folder. The script checks for the existence of the following files:</p>
+
+<ul>
+<li><em>README.txt</em> - the file that describes the data</li>
+<li><em>activity_labels.txt</em> </li>
+<li><em>features_info.txt</em></li>
+<li><em>features.txt</em></li>
+<li><em>train/</em>
+
+<ul>
+<li><em>subject_train.txt</em></li>
+<li><em>y_train.txt</em></li>
+<li><em>X_train.txt</em></li>
+</ul></li>
+<li><em>test/</em>
+
+<ul>
+<li><em>subject_test.txt</em></li>
+<li><em>y_test.txt</em></li>
+<li><em>X_test.txt</em></li>
+</ul></li>
+</ul>
+
+<p>To carry out this check, the script uses some functions defined in <strong>Functions.R</strong>. If any of the files is not available, it checks if the  zip file containing the data set is available in <strong>data</strong>, otherwise it downloads it from <a href="https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip">https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip</a>. The above mentioned files are extracted to the <strong>data/rawdata</strong> folder.</p>
+
+<h2>Merging the data</h2>
+
+<p>In the second step, the script merges reads the files in the <strong>rawdata</strong> folder and merges their content, to which end it uses the <strong>mergeData</strong> function in <strong>Functions.R</strong>. This operation entails
+loading and binding (<em>cbind</em>) the data of each data set (data is joined using <em>do.call(rbind,&hellip;)</em>).</p>
+
+<h2>Generating the tidy full dataset</h2>
+
+<p>In this step, the columns containing mean and standard deviations are filtered. The columns averaging the measures taken are filtered out. Therefore, ontly the values for the following colums are kept:</p>
+
+<ul>
+<li>timeBodyAcc-mean()-X</li>
+<li>timeBodyAcc-mean()-Y</li>
+<li>timeBodyAcc-mean()-Z</li>
+<li>timeBodyAcc-std()-X</li>
+<li>timeBodyAcc-std()-Y</li>
+<li>timeBodyAcc-std()-Z</li>
+<li>timeGravAcc-mean()-X</li>
+<li>timeGravAcc-mean()-Y</li>
+<li>timeGravAcc-mean()-Z</li>
+<li>timeGravAcc-std()-X</li>
+<li>timeGravAcc-std()-Y</li>
+<li>timeGravAcc-std()-Z</li>
+<li>timeBodyAccJerk-mean()-X</li>
+<li>timeBodyAccJerk-mean()-Y</li>
+<li>timeBodyAccJerk-mean()-Z</li>
+<li>timeBodyAccJerk-std()-X</li>
+<li>timeBodyAccJerk-std()-Y</li>
+<li>timeBodyAccJerk-std()-Z</li>
+<li>timeBodyGyro-mean()-X</li>
+<li>timeBodyGyro-mean()-Y</li>
+<li>timeBodyGyro-mean()-Z</li>
+<li>timeBodyGyro-std()-X</li>
+<li>timeBodyGyro-std()-Y</li>
+<li>timeBodyGyro-std()-Z</li>
+<li>timeBodyGyroJerk-mean()-X</li>
+<li>timeBodyGyroJerk-mean()-Y</li>
+<li>timeBodyGyroJerk-mean()-Z</li>
+<li>timeBodyGyroJerk-std()-X</li>
+<li>timeBodyGyroJerk-std()-Y</li>
+<li>timeBodyGyroJerk-std()-Z</li>
+<li>freqBodyAcc-mean()-X</li>
+<li>freqBodyAcc-mean()-Y</li>
+<li>freqBodyAcc-mean()-Z</li>
+<li>freqBodyAcc-std()-X</li>
+<li>freqBodyAcc-std()-Y</li>
+<li>freqBodyAcc-std()-Z</li>
+<li>freqBodyAccJerk-mean()-X</li>
+<li>freqBodyAccJerk-mean()-Y</li>
+<li>freqBodyAccJerk-mean()-Z</li>
+<li>freqBodyAccJerk-std()-X</li>
+<li>freqBodyAccJerk-std()-Y</li>
+<li>freqBodyAccJerk-std()-Z</li>
+<li>freqBodyGyro-mean()-X</li>
+<li>freqBodyGyro-mean()-Y</li>
+<li>freqBodyGyro-mean()-Z</li>
+<li>freqBodyGyro-std()-X</li>
+<li>freqBodyGyro-std()-Y</li>
+<li>freqBodyGyro-std()-Z</li>
+</ul>
+
+<p>As can be observed, each colum describes many aspects (source,axis, etc.). Tidy the dataset, firts it is melt and new columns are created following the advices in <a href="http://vita.had.co.nz/papers/tidy-data-pres.pdf">http://vita.had.co.nz/papers/tidy-data-pres.pdf</a>. The final dataset contains to value columns (mean and std) and other columns that describe the axis, the source of the measure, etc. (see <strong>code book</strong>). </p>
+
+<h2>Generating the summarized tidy dataset</h2>
+
+<p>The average of the mean and std are computed using <em>ddply</em>.</p>
+
+</body>
+
+</html>
+
